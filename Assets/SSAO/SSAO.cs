@@ -7,6 +7,9 @@ public class SSAO : PostEffectsBase
 {
     public Shader shader;
     private Material mat;
+    
+    public float sampleCount = 64f;
+    public float sampleRadius = 0.01f;
 
     private Material material
     {
@@ -16,12 +19,20 @@ public class SSAO : PostEffectsBase
             {
                 mat = new Material(shader);
                 mat.SetMatrix("_Matrix_I_P", Matrix4x4.Inverse(GetComponent<Camera>().projectionMatrix));
+                mat.SetFloat("_SampleCount", sampleCount);
+                mat.SetFloat("_SampleRadius", sampleRadius);
             }
             return mat;
         }
     }
-
-    public void OnRenderImage(RenderTexture src, RenderTexture dest)
+    
+    private void Start()
+    {
+        Camera cam = GetComponent<Camera>();
+        cam.depthTextureMode |= DepthTextureMode.DepthNormals;
+    }
+    
+    private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
         if (material != null)
         {
