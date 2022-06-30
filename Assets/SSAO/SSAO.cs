@@ -8,8 +8,10 @@ public class SSAO : PostEffectsBase
     public Shader shader;
     private Material mat;
     
-    public float sampleCount = 64f;
-    public float sampleRadius = 0.01f;
+    public float sampleCount = 128f;
+    public float sampleRadius = 0.618f;
+    public float depthRange = 0.0001f;
+    public bool onlyOcclusion = false;
 
     private Material material
     {
@@ -18,10 +20,17 @@ public class SSAO : PostEffectsBase
             if (mat == null && shader != null)
             {
                 mat = new Material(shader);
-                mat.SetMatrix("_Matrix_I_P", Matrix4x4.Inverse(GetComponent<Camera>().projectionMatrix));
-                mat.SetFloat("_SampleCount", sampleCount);
-                mat.SetFloat("_SampleRadius", sampleRadius);
+#if UNITY_EDITOR
             }
+#endif
+            mat.SetFloat("_SampleCount", sampleCount);
+            mat.SetFloat("_SampleRadius", sampleRadius);
+            mat.SetFloat("_OnlyOcclusion", onlyOcclusion ? 1f : 0f);
+            mat.SetFloat("_DepthRange", depthRange);
+#if UNITY_EDITOR
+#else
+            }
+#endif
             return mat;
         }
     }
