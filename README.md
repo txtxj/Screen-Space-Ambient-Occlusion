@@ -2,14 +2,20 @@
 
 Games 101 大作业
 
-Shader On:
-![](./Imgs/ssao.png)
-
 Shader Off:
 ![](./Imgs/shaderoff.png)
 
+SSAO:
+![](./Imgs/ssao.png)
+
+SSAO + Gauss Blur:
+![](./Imgs/ssaoblur.png)
+
 Only SSAO:
 ![](./Imgs/onlyssao.png)
+
+Only SSAO + Gauss Blur:
+![](./Imgs/onlyssaoblur.png)
 
 #### 参考资料
 
