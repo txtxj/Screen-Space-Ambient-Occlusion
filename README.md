@@ -13,8 +13,8 @@ Only SSAO:
 
 #### 参考资料
 
- - https://www.bilibili.com/video/BV16q4y1U7S3
- - https://www.bilibili.com/video/BV1YK4y1T7yY
+ - https://www.bilibili.com/video/BV16q4y1U7S3?p=2
+ - https://www.bilibili.com/video/BV1YK4y1T7yY?p=8
  - https://blog.csdn.net/linuxheik/article/details/86691117
  - https://zhuanlan.zhihu.com/p/148627526
  - https://zhuanlan.zhihu.com/p/510620589

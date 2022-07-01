@@ -578,7 +578,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 0, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -640,8 +640,8 @@ MonoBehaviour:
   shader: {fileID: 4800000, guid: f430389c1ce758e4f8e63d2692c2344a, type: 3}
   sampleCount: 128
   sampleRadius: 0.618
-  depthRange: 0.2
-  onlyOcclusion: 1
+  depthRange: 0.01
+  onlyOcclusion: 0
 --- !u!1 &846355429
 GameObject:
   m_ObjectHideFlags: 0

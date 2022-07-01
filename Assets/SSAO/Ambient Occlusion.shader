@@ -115,10 +115,9 @@ Shader "Custom/Ambient Occlusion"
                     // Make offset follows a cubic uniform distribution
                     offset *= lerp(0.01, 1, scale * scale);
                     offset = mul(offset, TBN);
-                    float weight = smoothstep(0.2, 0, length(offset));
+                    float weight = smoothstep(0, 1, length(offset));
                     // samp: view space -> clip space -> ndc
                     float3 samp = viewPos + offset * _SampleRadius;
-                    float viewDepth = samp.z;
                     samp = mul(unity_CameraProjection, samp);
                     samp /= samp.z;
                     samp = (samp + 1) * 0.5;

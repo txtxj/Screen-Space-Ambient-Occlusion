@@ -10,7 +10,7 @@ public class SSAO : PostEffectsBase
     
     public float sampleCount = 128f;
     public float sampleRadius = 0.618f;
-    public float depthRange = 0.0001f;
+    public float depthRange = 0.01f;
     public bool onlyOcclusion = false;
 
     private Material material
