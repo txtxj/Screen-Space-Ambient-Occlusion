@@ -5,33 +5,54 @@ using UnityEngine;
 
 public class SSAO : PostEffectsBase
 {
-    public Shader shader;
-    private Material mat;
+    public Shader ssaoShader;
+    public Shader blurShader;
+    private Material ssaoMat;
+    private Material blurMat;
     
     public float sampleCount = 128f;
     public float sampleRadius = 0.618f;
-    public float depthRange = 0.01f;
+    public float depthRange = 0.0005f;
     public bool onlyOcclusion = false;
+    public bool blur = true;
 
-    private Material material
+    private Material ssaoMaterial
     {
         get
         {
-            if (mat == null && shader != null)
+            if (ssaoMat == null && ssaoShader != null)
             {
-                mat = new Material(shader);
+                ssaoMat = new Material(ssaoShader);
 #if UNITY_EDITOR
             }
 #endif
-            mat.SetFloat("_SampleCount", sampleCount);
-            mat.SetFloat("_SampleRadius", sampleRadius);
-            mat.SetFloat("_OnlyOcclusion", onlyOcclusion ? 1f : 0f);
-            mat.SetFloat("_DepthRange", depthRange);
+            ssaoMat.SetFloat("_SampleCount", sampleCount);
+            ssaoMat.SetFloat("_SampleRadius", sampleRadius);
+            ssaoMat.SetFloat("_DepthRange", depthRange);
 #if UNITY_EDITOR
 #else
             }
 #endif
-            return mat;
+            return ssaoMat;
+        }
+    }
+    private Material blurMaterial
+    {
+        get
+        {
+            if (blurMat == null && blurShader != null)
+            {
+                blurMat = new Material(blurShader);
+#if UNITY_EDITOR
+            }
+#endif
+            blurMat.SetFloat("_OnlyOcclusion", onlyOcclusion ? 1f : 0f);
+            blurMat.SetFloat("_IfBlur", blur ? 1f : 0f);
+#if UNITY_EDITOR
+#else
+            }
+#endif
+            return blurMat;
         }
     }
     
@@ -43,9 +64,12 @@ public class SSAO : PostEffectsBase
     
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        if (material != null)
+        if (ssaoMaterial != null && blurMaterial != null)
         {
-            Graphics.Blit(src, dest, material, -1);
+            RenderTexture temp = RenderTexture.GetTemporary(src.descriptor);
+            Graphics.Blit(src, temp, ssaoMaterial, -1);
+            Graphics.Blit(temp, dest, blurMaterial, -1);
+            RenderTexture.ReleaseTemporary(temp);
         }
         else
         {

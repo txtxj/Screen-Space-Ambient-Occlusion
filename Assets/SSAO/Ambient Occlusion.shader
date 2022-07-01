@@ -3,25 +3,14 @@ Shader "Custom/Ambient Occlusion"
     Properties
     {
         _MainTex ("Main Tex", 2D) = "white" {}
-        _SampleCount ("Sample Count", float) = 64
-        _SampleRadius ("Sample Radius", float) = 0.01
-        _DepthRange ("Depth Range", float) = 0.1
-        [MaterialToggle] _OnlyOcclusion ("Only Occusion", float) = 0
+        _SampleCount ("Sample Count", float) = 128
+        _SampleRadius ("Sample Radius", float) = 0.618
+        _DepthRange ("Depth Range", float) = 0.0005
     }
     SubShader
     {
-        Tags
-        {
-            "RenderType" = "Opaque"
-        }
-        
         Pass
         {
-            Tags
-            {
-                "LightMode" = "Always"
-            }
-            
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -34,10 +23,6 @@ Shader "Custom/Ambient Occlusion"
             float _SampleCount;
             fixed _SampleRadius;
             float _DepthRange;
-
-            fixed _OnlyOcclusion;
-
-            const float EPS = 0.1;
 
             struct v2f
             {
@@ -124,10 +109,9 @@ Shader "Custom/Ambient Occlusion"
                     float sampDepth = 0;
                     float3 sampNormal = 0;
                     DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, samp.xy), sampDepth, sampNormal);
-                    ao += abs(sampDepth - depth) < _DepthRange && depth > sampDepth + EPS ? weight : 0;
+                    ao += abs(sampDepth - depth) < _DepthRange && depth > sampDepth + 0.0001 ? weight : 0;
                 }
-                fixed4 color = _OnlyOcclusion > 0 ? 1 : tex2D(_MainTex, i.uv);
-                return color * (1 - ao / _SampleCount);
+                return fixed4(tex2D(_MainTex, i.uv).rgb, 1 - ao / _SampleCount);
             }
             
             ENDCG

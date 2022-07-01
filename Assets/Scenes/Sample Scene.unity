@@ -637,11 +637,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebda576848b0e3c42ae57412dd1f8be6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shader: {fileID: 4800000, guid: f430389c1ce758e4f8e63d2692c2344a, type: 3}
+  ssaoShader: {fileID: 4800000, guid: f430389c1ce758e4f8e63d2692c2344a, type: 3}
+  blurShader: {fileID: 4800000, guid: 30fbfe6440afaf942a3027fbbfec7944, type: 3}
   sampleCount: 128
   sampleRadius: 0.618
-  depthRange: 0.01
+  depthRange: 0.0005
   onlyOcclusion: 0
+  blur: 1
 --- !u!1 &846355429
 GameObject:
   m_ObjectHideFlags: 0
