@@ -94,11 +94,10 @@ Shader "Custom/Ambient Occlusion"
                 // Sampling
                 for (int j = 1; j <= sampleCount; j++)
                 {
-                    // offset follows a uniform distribution
                     float3 offset = sampling(j * i.uv);
                     float scale = j / _SampleCount;
-                    // Make offset follows a cubic uniform distribution
-                    offset *= scale * scale;
+                    // Bringing the sampling point closer to the centre of the ball
+                    offset *= scale;
                     offset = mul(offset, TBN);
                     float weight = smoothstep(0, 1, length(offset));
                     // samp: view space -> clip space -> ndc
