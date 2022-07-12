@@ -98,7 +98,7 @@ Shader "Custom/Ambient Occlusion"
                     float3 offset = sampling(j * i.uv);
                     float scale = j / _SampleCount;
                     // Make offset follows a cubic uniform distribution
-                    offset *= lerp(0.01, 1, scale * scale);
+                    offset *= scale * scale;
                     offset = mul(offset, TBN);
                     float weight = smoothstep(0, 1, length(offset));
                     // samp: view space -> clip space -> ndc
